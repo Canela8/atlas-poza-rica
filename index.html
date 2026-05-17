@@ -421,6 +421,17 @@
     bounds_group.addLayer(layer_dji_fly_20250722_185256_0182_1769184314666_photo_modified_5);
     map.addLayer(layer_dji_fly_20250722_185256_0182_1769184314666_photo_modified_5);
 
+    // --- NUEVA ORTOFOTO TEC POZA RICA ---
+    var layer_ITSPR = new L.tileLayer('./data/ITSPR/{z}/{x}/{y}.png', { // <- Asegúrate que diga ITSPR o el nombre real de tu carpeta
+        minZoom: 15,
+        maxZoom: 21,
+        opacity: 1.0,
+        attribution: 'Ortofoto ITSPR',
+        pane: 'pane_dji_fly_20250722_185256_0182_1769184314666_photo_modified_5' // <- Le heredamos este pane para que se vaya hasta arriba
+    });
+    bounds_group.addLayer(layer_ITSPR);
+    layer_ITSPR.addTo(map);
+
     //TARJETAS, LUMINARIAS Y BACHES ---
 
     const COLOR_SUBTITLE = '#546e7a';
@@ -981,6 +992,7 @@
             children: [
                 {label: "Ortofoto Parte 1", layer: layer_dji_fly_20250722_185256_0182_1769184314666_photo_modified_5},
                 {label: "Ortofoto Parte 2", layer: layer_dji_fly_20250722_185244_0181_1769184310403_photo_modified_4},
+                {label: "🎓Tec Poza Rica", layer: layer_ITSPR}
             ]
         },
         {
