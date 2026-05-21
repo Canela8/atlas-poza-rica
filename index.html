@@ -1098,33 +1098,33 @@
               i++;
         });
         
-        // --- BUSCADOR MULTICAPA (SOLUCIÓN DEFINITIVA Y LIMPIA) ---
+        // --- BUSCADOR MULTICAPA---
         
         
         var searchLayer = L.geoJson(null, {
-            // ESTO HACE QUE LOS POLÍGONOS Y LÍNEAS SEAN INVISIBLES
+            
             style: function (feature) {
                 return {
                     stroke: false,
                     fill: false,
                     opacity: 0,
                     fillOpacity: 0,
-                    interactive: false // Para que no bloqueen los clics del mapa
+                    interactive: false 
                 };
             },
-            // ESTO HACE QUE LOS PUNTOS (POSTES) SEAN INVISIBLES
+            
             pointToLayer: function (feature, latlng) {
                 return L.circleMarker(latlng, { radius: 0, opacity: 0, fillOpacity: 0, interactive: false });
             },
             onEachFeature: function (feature, layer) {
-                // Transferimos el popup original a la capa fantasma
+                
                 if (feature.properties._sourceLayer && feature.properties._sourceLayer.getPopup()) {
                     layer.bindPopup(feature.properties._sourceLayer.getPopup().getContent(), feature.properties._sourceLayer.getPopup().options);
                 }
             }
         });
 
-        // 2. Función para "chupar" los datos de tus capas reales y meterlos a la fantasma
+        // 2. Función para obtener los datos ggg
         function addDataToSearch(capaReal, campoClave, prefijoVisible) {
             if (!capaReal) return;
 
@@ -1132,7 +1132,7 @@
                 if (l.feature && l.feature.properties) {
                     var textoBusqueda = "";
 
-                    // Generamos el texto de búsqueda
+                    
                     if (typeof campoClave === 'function') {
                         textoBusqueda = campoClave(l.feature.properties);
                     } else {
@@ -1140,7 +1140,7 @@
                     }
 
                     if (textoBusqueda !== "") {
-                        // Creamos una copia del elemento (fantasma)
+                        
                         var geojsonFeature = {
                             "type": "Feature",
                             "properties": Object.assign({}, l.feature.properties),
@@ -1162,7 +1162,6 @@
         // 3. Extraemos los datos a la capa de búsqueda
         
         // --- MANZANAS ---
-        // Fusionamos la clave corta y el CVEGEO. Ej: "Manzana - 024 | 3013100010978024"
         if (typeof layer_Manzanas !== 'undefined') {
             addDataToSearch(layer_Manzanas, function(props) {
                 var corta = String(props['CVE_MZA'] || '').trim();
@@ -1172,7 +1171,6 @@
         }
 
         // --- AGEBS ---
-        // Igual que las manzanas, unimos ambas claves.
         if (typeof layer_AGEB !== 'undefined') {
             addDataToSearch(layer_AGEB, function(props) {
                 var corta = String(props['CVE_AGEB'] || '').trim();
@@ -1181,7 +1179,7 @@
             }, 'AGEB');
         }
         
-        // --- LUMINARIAS --- (Se quedan igual, buscando por ID)
+        // --- LUMINARIAS --- 
         if (typeof layer_Otro_6 !== 'undefined') addDataToSearch(layer_Otro_6, 'Id', 'Poste');
         if (typeof layer_Intermitente_7 !== 'undefined') addDataToSearch(layer_Intermitente_7, 'Id', 'Poste');
         if (typeof layer_Directa_8 !== 'undefined') addDataToSearch(layer_Directa_8, 'Id', 'Poste');
@@ -1190,8 +1188,7 @@
         if (typeof layer_Apagada_11 !== 'undefined') addDataToSearch(layer_Apagada_11, 'Id', 'Poste');
 
         // --- VIALIDADES ---
-        // Agregamos la clave CVEVIAL al final del nombre para que no se oculten los repetidos
-        // Ej: "Calle - CALLE MORELOS | Clave: 01345"
+        
         if (typeof layer_Vialidades !== 'undefined') {
             addDataToSearch(layer_Vialidades, function(props) {
                 var tipo = String(props['TIPOVIAL'] || '').trim();
@@ -1215,7 +1212,7 @@
             textCancel: 'Cancelar',
             textPlaceholder: 'Buscar (Ej: Calle Hidalgo, Poste P-004)...',
             casesensitive: false,
-            autoCollapse: false, // <-- ¡MAGIA 1! Cambiamos a 'false' para que no se cierre solo
+            autoCollapse: false, 
             filterData: function(text, records) {
                 var selectFiltro = document.getElementById('filtro-busqueda');
                 var filtroActivo = selectFiltro ? selectFiltro.value : "";
@@ -1247,33 +1244,33 @@
 
         map.addControl(searchControl);
 
-        // Restaurar el ícono de binoculares
+        
         var searchBtn = document.querySelector('.search-button');
         if (searchBtn) searchBtn.classList.add('fa', 'fa-binoculars');
 
-        // --- 6. FIX DE COPIAR/PEGAR Y MENÚ DESPLEGABLE ---
+        // --- 6. FIXMENÚ DESPLEGABLE ---
         setTimeout(function() {
             var searchInput = searchControl._input;
             var searchContainer = searchControl.getContainer();
 
             if (searchInput) {
-                // ¡MAGIA 2! Usamos 'input' (detecta pegar, cortar, arrastrar) y un KeyboardEvent nativo
+                
                 searchInput.addEventListener('input', function() {
                     setTimeout(function() { 
                         var eventoTeclado = new KeyboardEvent('keyup', {
                             bubbles: true, cancelable: true, keyCode: 13
                         });
                         searchInput.dispatchEvent(eventoTeclado); 
-                    }, 150); // 150ms da tiempo perfecto para que el texto pegado se asimile
+                    }, 150); 
                 });
             }
 
             if (searchContainer) {
-                // Evitamos que los clics internos cierren cosas por error
+                
                 L.DomEvent.disableClickPropagation(searchContainer);
                 searchContainer.addEventListener('mousedown', function(e) { e.stopPropagation(); });
                 
-                // Creamos el menú desplegable si no existe
+                //menú desplegable
                 if(!document.getElementById('filtro-busqueda')) {
                     var selectHTML = document.createElement('select');
                     selectHTML.id = 'filtro-busqueda';
@@ -1289,7 +1286,7 @@
                     
                     searchContainer.appendChild(selectHTML);
 
-                    // Re-buscar automáticamente si cambias el filtro
+                    // Re-buscar automáticamente
                     selectHTML.addEventListener('change', function() {
                         if (searchInput && searchInput.value !== '') {
                             var eventoTeclado = new KeyboardEvent('keyup', { bubbles: true, keyCode: 13 });
