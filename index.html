@@ -1098,16 +1098,207 @@
               i++;
         });
         
-        map.addControl(new L.Control.Search({
-            layer: layer_Alumbradopostes_12,
-            initial: false,
-            hideMarkerOnCollapse: true,
-            propertyName: 'Id'}));
-        if (typeof url === 'undefined') {
-            document.getElementsByClassName('search-button')[0].className += ' fa fa-binoculars';
-        } else {
-            document.getElementsByClassName('search-button')[1].className += ' fa fa-binoculars';
+        // --- BUSCADOR MULTICAPA (SOLUCIÓN DEFINITIVA Y LIMPIA) ---
+        
+        
+        var searchLayer = L.geoJson(null, {
+            // ESTO HACE QUE LOS POLÍGONOS Y LÍNEAS SEAN INVISIBLES
+            style: function (feature) {
+                return {
+                    stroke: false,
+                    fill: false,
+                    opacity: 0,
+                    fillOpacity: 0,
+                    interactive: false // Para que no bloqueen los clics del mapa
+                };
+            },
+            // ESTO HACE QUE LOS PUNTOS (POSTES) SEAN INVISIBLES
+            pointToLayer: function (feature, latlng) {
+                return L.circleMarker(latlng, { radius: 0, opacity: 0, fillOpacity: 0, interactive: false });
+            },
+            onEachFeature: function (feature, layer) {
+                // Transferimos el popup original a la capa fantasma
+                if (feature.properties._sourceLayer && feature.properties._sourceLayer.getPopup()) {
+                    layer.bindPopup(feature.properties._sourceLayer.getPopup().getContent(), feature.properties._sourceLayer.getPopup().options);
+                }
+            }
+        });
+
+        // 2. Función para "chupar" los datos de tus capas reales y meterlos a la fantasma
+        function addDataToSearch(capaReal, campoClave, prefijoVisible) {
+            if (!capaReal) return;
+
+            capaReal.eachLayer(function(l) {
+                if (l.feature && l.feature.properties) {
+                    var textoBusqueda = "";
+
+                    // Generamos el texto de búsqueda
+                    if (typeof campoClave === 'function') {
+                        textoBusqueda = campoClave(l.feature.properties);
+                    } else {
+                        textoBusqueda = String(l.feature.properties[campoClave] || '').trim();
+                    }
+
+                    if (textoBusqueda !== "") {
+                        // Creamos una copia del elemento (fantasma)
+                        var geojsonFeature = {
+                            "type": "Feature",
+                            "properties": Object.assign({}, l.feature.properties),
+                            "geometry": l.feature.geometry
+                        };
+
+                        // Etiqueta visual para la lista (Ej: "Manzana - 015")
+                        geojsonFeature.properties['search_field'] = prefijoVisible + " - " + textoBusqueda;
+                        
+                        // Guardamos una referencia a la capa original para abrir su popup
+                        geojsonFeature.properties['_sourceLayer'] = l;
+
+                        searchLayer.addData(geojsonFeature);
+                    }
+                }
+            });
         }
+
+        // 3. Extraemos los datos a la capa de búsqueda
+        
+        // --- MANZANAS ---
+        // Fusionamos la clave corta y el CVEGEO. Ej: "Manzana - 024 | 3013100010978024"
+        if (typeof layer_Manzanas !== 'undefined') {
+            addDataToSearch(layer_Manzanas, function(props) {
+                var corta = String(props['CVE_MZA'] || '').trim();
+                var larga = String(props['CVEGEO'] || '').trim();
+                return corta + " | " + larga;
+            }, 'Manzana');
+        }
+
+        // --- AGEBS ---
+        // Igual que las manzanas, unimos ambas claves.
+        if (typeof layer_AGEB !== 'undefined') {
+            addDataToSearch(layer_AGEB, function(props) {
+                var corta = String(props['CVE_AGEB'] || '').trim();
+                var larga = String(props['CVEGEO'] || '').trim();
+                return corta + " | " + larga;
+            }, 'AGEB');
+        }
+        
+        // --- LUMINARIAS --- (Se quedan igual, buscando por ID)
+        if (typeof layer_Otro_6 !== 'undefined') addDataToSearch(layer_Otro_6, 'Id', 'Poste');
+        if (typeof layer_Intermitente_7 !== 'undefined') addDataToSearch(layer_Intermitente_7, 'Id', 'Poste');
+        if (typeof layer_Directa_8 !== 'undefined') addDataToSearch(layer_Directa_8, 'Id', 'Poste');
+        if (typeof layer_Daado_9 !== 'undefined') addDataToSearch(layer_Daado_9, 'Id', 'Poste');
+        if (typeof layer_Bueno_10 !== 'undefined') addDataToSearch(layer_Bueno_10, 'Id', 'Poste');
+        if (typeof layer_Apagada_11 !== 'undefined') addDataToSearch(layer_Apagada_11, 'Id', 'Poste');
+
+        // --- VIALIDADES ---
+        // Agregamos la clave CVEVIAL al final del nombre para que no se oculten los repetidos
+        // Ej: "Calle - CALLE MORELOS | Clave: 01345"
+        if (typeof layer_Vialidades !== 'undefined') {
+            addDataToSearch(layer_Vialidades, function(props) {
+                var tipo = String(props['TIPOVIAL'] || '').trim();
+                var nombre = String(props['NOMVIAL'] || '').trim();
+                var clave = String(props['CVEVIAL'] || '').trim();
+                
+                if (nombre.toLowerCase() === 'ninguno') nombre = 'SIN NOMBRE';
+                
+                return (tipo + ' ' + nombre).trim() + " | Clave: " + clave;
+            }, 'Calle');
+        }
+
+        // 4. Instanciar el buscador
+        var searchControl = new L.Control.Search({
+            layer: searchLayer,
+            initial: false,
+            propertyName: 'search_field',
+            zoom: 19,
+            marker: false,
+            textErr: 'No encontrado',
+            textCancel: 'Cancelar',
+            textPlaceholder: 'Buscar (Ej: Calle Hidalgo, Poste P-004)...',
+            casesensitive: false,
+            autoCollapse: false, // <-- ¡MAGIA 1! Cambiamos a 'false' para que no se cierre solo
+            filterData: function(text, records) {
+                var selectFiltro = document.getElementById('filtro-busqueda');
+                var filtroActivo = selectFiltro ? selectFiltro.value : "";
+                var res = {};
+                var reg = new RegExp(text, 'i');
+                
+                for(var key in records) {
+                    if (filtroActivo !== "" && !key.startsWith(filtroActivo)) continue;
+                    if(reg.test(key)) res[key] = records[key];
+                }
+                return res;
+            }
+        });
+
+        // 5. Qué hacer cuando encuentra algo
+        searchControl.on('search:locationfound', function(e) {
+            var capaOriginal = e.layer.feature.properties._sourceLayer;
+            if (capaOriginal && capaOriginal.openPopup) {
+                capaOriginal.openPopup();
+                if (capaOriginal.setStyle && typeof capaOriginal.setStyle === 'function') {
+                    var estiloOriginal = Object.assign({}, capaOriginal.options);
+                    capaOriginal.setStyle({fillColor: '#FFD700', color: '#ff0000', weight: 4, opacity: 1, fillOpacity: 0.7});
+                    setTimeout(function(){
+                        if (map.hasLayer(capaOriginal)) capaOriginal.setStyle(estiloOriginal);
+                    }, 2500);
+                }
+            }
+        });
+
+        map.addControl(searchControl);
+
+        // Restaurar el ícono de binoculares
+        var searchBtn = document.querySelector('.search-button');
+        if (searchBtn) searchBtn.classList.add('fa', 'fa-binoculars');
+
+        // --- 6. FIX DE COPIAR/PEGAR Y MENÚ DESPLEGABLE ---
+        setTimeout(function() {
+            var searchInput = searchControl._input;
+            var searchContainer = searchControl.getContainer();
+
+            if (searchInput) {
+                // ¡MAGIA 2! Usamos 'input' (detecta pegar, cortar, arrastrar) y un KeyboardEvent nativo
+                searchInput.addEventListener('input', function() {
+                    setTimeout(function() { 
+                        var eventoTeclado = new KeyboardEvent('keyup', {
+                            bubbles: true, cancelable: true, keyCode: 13
+                        });
+                        searchInput.dispatchEvent(eventoTeclado); 
+                    }, 150); // 150ms da tiempo perfecto para que el texto pegado se asimile
+                });
+            }
+
+            if (searchContainer) {
+                // Evitamos que los clics internos cierren cosas por error
+                L.DomEvent.disableClickPropagation(searchContainer);
+                searchContainer.addEventListener('mousedown', function(e) { e.stopPropagation(); });
+                
+                // Creamos el menú desplegable si no existe
+                if(!document.getElementById('filtro-busqueda')) {
+                    var selectHTML = document.createElement('select');
+                    selectHTML.id = 'filtro-busqueda';
+                    selectHTML.innerHTML = `
+                        <option value="">🔎 Buscar en todo</option>
+                        <option value="Manzana">📍 Solo Manzanas</option>
+                        <option value="Calle">🛣️ Solo Calles</option>
+                        <option value="AGEB">🟣 Solo AGEBs</option>
+                        <option value="Poste">💡 Solo Postes</option>
+                    `;
+                    
+                    selectHTML.style.cssText = 'border: 2px solid #C3935D; padding: 2px; border-radius: 4px; margin-left: 6px; background: white; color: #7E1928; font-weight: bold; cursor: pointer; outline: none; font-family: Montserrat, sans-serif; font-size: 11px; height: 28px; vertical-align: top; display: inline-block;';
+                    
+                    searchContainer.appendChild(selectHTML);
+
+                    // Re-buscar automáticamente si cambias el filtro
+                    selectHTML.addEventListener('change', function() {
+                        if (searchInput && searchInput.value !== '') {
+                            var eventoTeclado = new KeyboardEvent('keyup', { bubbles: true, keyCode: 13 });
+                            searchInput.dispatchEvent(eventoTeclado);
+                        }
+                    });
+                }
+            }
+        }, 500);
         L.ImageOverlay.include({
             getBounds: function () {
                 return this._bounds;
