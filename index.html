@@ -76,7 +76,7 @@
         }
 
         .client-area { 
-            font-size: 13px; color: rgba(255,255,255,0.9); 
+            font-size: 18px; color: rgba(255,255,255,0.9); 
             border-left: 1px solid #C3935D; padding-left: 20px; 
             font-weight: 600; height: 40px; display: flex; align-items: center;
         }
@@ -282,7 +282,7 @@
             </div>
         </div>
         <div class="client-area">
-            <span>CATASTRO Y DESARROLLO URBANO</span>
+            <span>ATLAS DE RIESGOS</span>
         </div>
     </div> 
     
@@ -314,6 +314,16 @@
     <script src="data/Bueno_10.js"></script>
     <script src="data/Apagada_11.js"></script>
     <script src="data/Alumbradopostes_12.js"></script>
+    <script src="data/riesgos/Inundacion_Muybaja.js"></script>
+    <script src="data/riesgos/Inundacion_Baja.js"></script>
+    <script src="data/riesgos/Inundacion_Media.js"></script>
+    <script src="data/riesgos/Inundacion_Alta.js"></script>
+    <script src="data/riesgos/Inundacion_Muyalta.js"></script>
+    <script src="data/riesgos/Ciclones_Muybaja.js"></script>
+    <script src="data/riesgos/Ciclones_Baja.js"></script>
+    <script src="data/riesgos/Ciclones_Media.js"></script>
+    <script src="data/riesgos/Ciclones_Alta.js"></script>
+    <script src="data/riesgos/Ciclones_Muyalta.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side@2.0.0/leaflet-side-by-side.min.js"></script>
     
     <script>
@@ -515,7 +525,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Otro_6 = new L.geoJson(json_Otro_6, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Otro_6, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#e67e22') }); } });
-    bounds_group.addLayer(layer_Otro_6); map.addLayer(layer_Otro_6);
+    bounds_group.addLayer(layer_Otro_6);
 
     // INTERMITENTE 
     function pop_Intermitente_7(feature, layer) {
@@ -525,7 +535,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Intermitente_7 = new L.geoJson(json_Intermitente_7, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Intermitente_7, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#9b59b6') }); } });
-    bounds_group.addLayer(layer_Intermitente_7); map.addLayer(layer_Intermitente_7);
+    bounds_group.addLayer(layer_Intermitente_7);
 
     // DIRECTA 
     function pop_Directa_8(feature, layer) {
@@ -535,7 +545,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Directa_8 = new L.geoJson(json_Directa_8, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Directa_8, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#f1c40f') }); } });
-    bounds_group.addLayer(layer_Directa_8); map.addLayer(layer_Directa_8);
+    bounds_group.addLayer(layer_Directa_8);
 
     // DAÑADO 
     function pop_Daado_9(feature, layer) {
@@ -545,7 +555,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Daado_9 = new L.geoJson(json_Daado_9, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Daado_9, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#e74c3c') }); } });
-    bounds_group.addLayer(layer_Daado_9); map.addLayer(layer_Daado_9);
+    bounds_group.addLayer(layer_Daado_9);
 
     // BUENO 
     function pop_Bueno_10(feature, layer) {
@@ -555,7 +565,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Bueno_10 = new L.geoJson(json_Bueno_10, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Bueno_10, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#2ecc71') }); } });
-    bounds_group.addLayer(layer_Bueno_10); map.addLayer(layer_Bueno_10);
+    bounds_group.addLayer(layer_Bueno_10);
 
     // APAGADA 
     function pop_Apagada_11(feature, layer) {
@@ -565,7 +575,7 @@
         layer.on('click', function(e) { map.flyTo(e.latlng, 19); });
     }
     var layer_Apagada_11 = new L.geoJson(json_Apagada_11, { attribution: '', interactive: true, pane: 'pane_PuntosAltos', onEachFeature: pop_Apagada_11, pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoLuz('#34495e') }); } });
-    bounds_group.addLayer(layer_Apagada_11); map.addLayer(layer_Apagada_11);
+    bounds_group.addLayer(layer_Apagada_11);
 
     // --- 5. CAPAS DE BACHES ---
     function pop_BacheGeneral(feature, layer, colorRiesgo) {
@@ -588,7 +598,7 @@
             pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoBache('#ff0000') }); },
             onEachFeature: function(f, l) { pop_BacheGeneral(f, l, '#c0392b'); }
         });
-        bounds_group.addLayer(layer_RiesgoAlto); map.addLayer(layer_RiesgoAlto);
+        bounds_group.addLayer(layer_RiesgoAlto);
     } else { layer_RiesgoAlto = L.layerGroup(); }
 
     // RIESGO MEDIO 
@@ -598,7 +608,7 @@
             pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoBache('#ff9f43') }); },
             onEachFeature: function(f, l) { pop_BacheGeneral(f, l, '#d35400'); }
         });
-        bounds_group.addLayer(layer_RiesgoMedio); map.addLayer(layer_RiesgoMedio);
+        bounds_group.addLayer(layer_RiesgoMedio);
     } else { layer_RiesgoMedio = L.layerGroup(); }
 
     // RIESGO BAJO 
@@ -608,7 +618,7 @@
             pointToLayer: function (f, l) { return L.marker(l, { icon: crearIconoBache('#f1c40f') }); },
             onEachFeature: function(f, l) { pop_BacheGeneral(f, l, '#f39c12'); }
         });
-        bounds_group.addLayer(layer_RiesgoBajo); map.addLayer(layer_RiesgoBajo);
+        bounds_group.addLayer(layer_RiesgoBajo);
     } else { layer_RiesgoBajo = L.layerGroup(); }
 
     function pop_Alumbradopostes_12(feature, layer) { layer.bindPopup(removeEmptyRowsFromPopupContent('<table><tr><td colspan="2">' + (feature.properties['fid'] !== null ? autolinker.link(String(feature.properties['fid']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Id'] !== null ? autolinker.link(String(feature.properties['Id']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Tipo'] !== null ? autolinker.link(String(feature.properties['Tipo']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Estado'] !== null ? autolinker.link(String(feature.properties['Estado']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Foto_evidencia'] !== null ? '<img src="images/' + String(feature.properties['Foto_evidencia']).replace(/[\\/:]/g, '_').trim().replace(/'/g, '\'').replace(/"/g, '&quot;') + '">' : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Observaciones'] !== null ? autolinker.link(String(feature.properties['Observaciones']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr><tr><td colspan="2">' + (feature.properties['Cuenta'] !== null ? autolinker.link(String(feature.properties['Cuenta']).replace(/'/g, '\'').toLocaleString()) : '') + '</td></tr></table>', feature), { maxHeight: 400 }); }
@@ -633,7 +643,7 @@
                 fill: false,
                 interactive: false
             }
-        }).addTo(map); 
+        });
     } else {
         console.log("⚠️ ERROR: Busqué 'json_Limitemunicipal_5' y no lo hallé.");
         layer_Limites = L.layerGroup(); 
@@ -747,7 +757,7 @@
             });
         }
 
-        layer_Manzanas.addTo(map);
+        // layer_Manzanas.addTo(map);
 
     } else {
         console.log("⚠️ ERROR: No encuentro json_Manzanas_4");
@@ -853,7 +863,7 @@
             });
         }
 
-        layer_Vialidades.addTo(map);
+        // layer_Vialidades.addTo(map);
 
     } else {
         console.log("⚠️ No encuentro json_Vialidades_7");
@@ -937,73 +947,88 @@
         layer_AGEB = L.layerGroup();
     }
 
+    function styleInundacion(color) {
+        return {
+            opacity: 1,
+            color: 'rgba(35,35,35,0.7)',
+            dashArray: '',
+            lineCap: 'butt',
+            lineJoin: 'miter',
+            weight: 1.0, 
+            fill: true,
+            fillOpacity: 0.65,
+            fillColor: color,
+            interactive: true,
+        };
+    }
+    
+    function onEachInundacion(feature, layer) {
+        if (feature.properties) {
+            var col = feature.properties['COLONIA'] || '';
+            var vul = feature.properties['VULNERABIL'] || '';
+            var popupContent = '<div style="font-size: 14px; text-transform: uppercase; padding: 10px;">' +
+                '<div style="margin-bottom: 5px;"><strong style="color:#444;">COLONIA:</strong> ' + String(col) + '</div>' +
+                '<div><strong style="color:#444;">VULNERABILIDAD:</strong> ' + String(vul) + '</div>' +
+                '</div>';
+            layer.bindPopup(popupContent, { maxHeight: 400 });
+        }
+    }
+
+    var layer_Inundacion_MuyBaja = (typeof json_Inundacion_Muybaja !== 'undefined') ? new L.geoJson(json_Inundacion_Muybaja, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Baja = (typeof json_Inundacion_Baja !== 'undefined') ? new L.geoJson(json_Inundacion_Baja, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Media = (typeof json_Inundacion_Media !== 'undefined') ? new L.geoJson(json_Inundacion_Media, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Alta = (typeof json_Inundacion_Alta !== 'undefined') ? new L.geoJson(json_Inundacion_Alta, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_MuyAlta = (typeof json_Inundacion_Muyalta !== 'undefined') ? new L.geoJson(json_Inundacion_Muyalta, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Inundacion_Muybaja !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyBaja);
+    if(typeof json_Inundacion_Baja !== 'undefined') bounds_group.addLayer(layer_Inundacion_Baja);
+    if(typeof json_Inundacion_Media !== 'undefined') bounds_group.addLayer(layer_Inundacion_Media);
+    if(typeof json_Inundacion_Alta !== 'undefined') bounds_group.addLayer(layer_Inundacion_Alta);
+    if(typeof json_Inundacion_Muyalta !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyAlta);
+
+    var layer_Ciclones_MuyBaja = (typeof json_Ciclones_Muybaja !== 'undefined') ? new L.geoJson(json_Ciclones_Muybaja, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Baja = (typeof json_Ciclones_Baja !== 'undefined') ? new L.geoJson(json_Ciclones_Baja, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Media = (typeof json_Ciclones_Media !== 'undefined') ? new L.geoJson(json_Ciclones_Media, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Alta = (typeof json_Ciclones_Alta !== 'undefined') ? new L.geoJson(json_Ciclones_Alta, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_MuyAlta = (typeof json_Ciclones_Muyalta !== 'undefined') ? new L.geoJson(json_Ciclones_Muyalta, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Ciclones_Muybaja !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyBaja);
+    if(typeof json_Ciclones_Baja !== 'undefined') bounds_group.addLayer(layer_Ciclones_Baja);
+    if(typeof json_Ciclones_Media !== 'undefined') bounds_group.addLayer(layer_Ciclones_Media);
+    if(typeof json_Ciclones_Alta !== 'undefined') bounds_group.addLayer(layer_Ciclones_Alta);
+    if(typeof json_Ciclones_Muyalta !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyAlta);
+
     var overlaysTree = [
-        // GRUPO 1: CATASTRO
+        // ATLAS DE RIESGOS
         {
-            label: '<b>Catastro Municipal</b>',
+            label: '<b>Atlas de Riesgos</b>',
             selectAllCheckbox: true,
             collapsed: false,
             children: [
-                {label: "📍 Límite Municipal", layer: layer_Limites},
-                {label: "🟣 Zonificación (AGEBs)", layer: layer_AGEB},
-                {label: "⬜ Traza Urbana (Manzanas)", layer: layer_Manzanas},
-                {label: "🛣️ Red Vial (Nombres)", layer: layer_Vialidades},
-            ]
-        },
-
-        // GRUPO 3: INFRAESTRUCTURA 
-        {
-            label: '<b>Infraestructura Urbana</b>',
-            selectAllCheckbox: true,
-            children: [
-                // SUBGRUPO A: LUMINARIAS
                 {
-                    label: '💡 Alumbrado Público',
+                    label: '🌊 Inundaciones fluviales',
                     selectAllCheckbox: true,
-                    collapsed: true, 
+                    collapsed: false,
                     children: [
-                        {label: '⚫ Apagada', layer: layer_Apagada_11},
-                        {label: '🟢 Operativo (Bueno)', layer: layer_Bueno_10},
-                        {label: '🔴 Dañado', layer: layer_Daado_9},
-                        {label: '🟡 Directa', layer: layer_Directa_8},
-                        {label: '🟣 Intermitente', layer: layer_Intermitente_7},
-                        {label: '🟠 Otro', layer: layer_Otro_6},
+                        {label: '🟩 Muy baja', layer: layer_Inundacion_MuyBaja},
+                        {label: '🟩 Baja', layer: layer_Inundacion_Baja},
+                        {label: '🟨 Media', layer: layer_Inundacion_Media},
+                        {label: '🟧 Alta', layer: layer_Inundacion_Alta},
+                        {label: '🟥 Muy alta', layer: layer_Inundacion_MuyAlta}
                     ]
                 },
-                // SUBGRUPO B: BACHES (PAVIMENTO)
                 {
-                    label: '🚧 Estado del Pavimento (baches)',
+                    label: '🌀 Ciclones tropicales',
                     selectAllCheckbox: true,
-                    collapsed: false, 
+                    collapsed: true,
                     children: [
-                        {label: '🔺 Riesgo Alto', layer: layer_RiesgoAlto},
-                        {label: '🔸 Riesgo Medio', layer: layer_RiesgoMedio},
-                        {label: '⚠️ Riesgo Bajo', layer: layer_RiesgoBajo},
+                        {label: '🟩 Muy baja', layer: layer_Ciclones_MuyBaja},
+                        {label: '🟩 Baja', layer: layer_Ciclones_Baja},
+                        {label: '🟨 Media', layer: layer_Ciclones_Media},
+                        {label: '🟧 Alta', layer: layer_Ciclones_Alta},
+                        {label: '🟥 Muy alta', layer: layer_Ciclones_MuyAlta}
                     ]
                 }
-            ]
-        },
-
-        // GRUPO 4: ORTOFOTOS
-        {
-            label: '<b>Ortofotos</b>',
-            selectAllCheckbox: true,
-            collapsed: true,
-            children: [
-                {label: "Ortofoto Parte 1", layer: layer_dji_fly_20250722_185256_0182_1769184314666_photo_modified_5},
-                {label: "Ortofoto Parte 2", layer: layer_dji_fly_20250722_185244_0181_1769184310403_photo_modified_4},
-                {label: "🎓Tec Poza Rica", layer: layer_ITSPR}
-            ]
-        },
-        {
-            label: '<b>Mapas Base</b>',
-            selectAllCheckbox: false, 
-            collapsed: true, 
-            children: [
-                {label: "🛰️ Google Híbrido", layer: layer_GoogleSatelliteHybrid_3, radioGroup: 'bm' },
-                {label: "🌍 Google Satélite", layer: layer_GoogleMapSatellite_2, radioGroup: 'bm' },
-                {label: "🗺️ Google Maps", layer: layer_GoogleMaps_1, radioGroup: 'bm' },
-                {label: "🏙️ OpenStreetMap", layer: layer_OpenStreetMap_0, radioGroup: 'bm' },
             ]
         }
     ];
@@ -1161,46 +1186,22 @@
 
         // 3. Extraemos los datos a la capa de búsqueda
         
-        // --- MANZANAS ---
-        if (typeof layer_Manzanas !== 'undefined') {
-            addDataToSearch(layer_Manzanas, function(props) {
-                var corta = String(props['CVE_MZA'] || '').trim();
-                var larga = String(props['CVEGEO'] || '').trim();
-                return corta + " | " + larga;
-            }, 'Manzana');
+        function getColoniaText(props) {
+            var col = String(props['COLONIA'] || '').trim();
+            return col === '' ? 'SIN NOMBRE' : col;
         }
 
-        // --- AGEBS ---
-        if (typeof layer_AGEB !== 'undefined') {
-            addDataToSearch(layer_AGEB, function(props) {
-                var corta = String(props['CVE_AGEB'] || '').trim();
-                var larga = String(props['CVEGEO'] || '').trim();
-                return corta + " | " + larga;
-            }, 'AGEB');
-        }
-        
-        // --- LUMINARIAS --- 
-        if (typeof layer_Otro_6 !== 'undefined') addDataToSearch(layer_Otro_6, 'Id', 'Poste');
-        if (typeof layer_Intermitente_7 !== 'undefined') addDataToSearch(layer_Intermitente_7, 'Id', 'Poste');
-        if (typeof layer_Directa_8 !== 'undefined') addDataToSearch(layer_Directa_8, 'Id', 'Poste');
-        if (typeof layer_Daado_9 !== 'undefined') addDataToSearch(layer_Daado_9, 'Id', 'Poste');
-        if (typeof layer_Bueno_10 !== 'undefined') addDataToSearch(layer_Bueno_10, 'Id', 'Poste');
-        if (typeof layer_Apagada_11 !== 'undefined') addDataToSearch(layer_Apagada_11, 'Id', 'Poste');
+        if (typeof layer_Inundacion_MuyBaja !== 'undefined') addDataToSearch(layer_Inundacion_MuyBaja, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Baja !== 'undefined') addDataToSearch(layer_Inundacion_Baja, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Media !== 'undefined') addDataToSearch(layer_Inundacion_Media, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Alta !== 'undefined') addDataToSearch(layer_Inundacion_Alta, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_MuyAlta !== 'undefined') addDataToSearch(layer_Inundacion_MuyAlta, getColoniaText, 'Inundaciones');
 
-        // --- VIALIDADES ---
-        
-        if (typeof layer_Vialidades !== 'undefined') {
-            addDataToSearch(layer_Vialidades, function(props) {
-                var tipo = String(props['TIPOVIAL'] || '').trim();
-                var nombre = String(props['NOMVIAL'] || '').trim();
-                var clave = String(props['CVEVIAL'] || '').trim();
-                
-                if (nombre.toLowerCase() === 'ninguno') nombre = 'SIN NOMBRE';
-                
-                return (tipo + ' ' + nombre).trim() + " | Clave: " + clave;
-            }, 'Calle');
-        }
-
+        if (typeof layer_Ciclones_MuyBaja !== 'undefined') addDataToSearch(layer_Ciclones_MuyBaja, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Baja !== 'undefined') addDataToSearch(layer_Ciclones_Baja, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Media !== 'undefined') addDataToSearch(layer_Ciclones_Media, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Alta !== 'undefined') addDataToSearch(layer_Ciclones_Alta, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_MuyAlta !== 'undefined') addDataToSearch(layer_Ciclones_MuyAlta, getColoniaText, 'Tormenta');
         // 4. Instanciar el buscador
         var searchControl = new L.Control.Search({
             layer: searchLayer,
@@ -1210,7 +1211,7 @@
             marker: false,
             textErr: 'No encontrado',
             textCancel: 'Cancelar',
-            textPlaceholder: 'Buscar (Ej: Calle Hidalgo, Poste P-004)...',
+            textPlaceholder: 'Buscar colonias...',
             casesensitive: false,
             autoCollapse: false, 
             filterData: function(text, records) {
@@ -1276,10 +1277,8 @@
                     selectHTML.id = 'filtro-busqueda';
                     selectHTML.innerHTML = `
                         <option value="">🔎 Buscar en todo</option>
-                        <option value="Manzana">📍 Solo Manzanas</option>
-                        <option value="Calle">🛣️ Solo Calles</option>
-                        <option value="AGEB">🟣 Solo AGEBs</option>
-                        <option value="Poste">💡 Solo Postes</option>
+                        <option value="Inundaciones">🌊 Inundaciones fluviales</option>
+                        <option value="Tormenta">🌀 Ciclones tropicales</option>
                     `;
                     
                     selectHTML.style.cssText = 'border: 2px solid #C3935D; padding: 2px; border-radius: 4px; margin-left: 6px; background: white; color: #7E1928; font-weight: bold; cursor: pointer; outline: none; font-family: Montserrat, sans-serif; font-size: 11px; height: 28px; vertical-align: top; display: inline-block;';
@@ -1603,7 +1602,7 @@
             return div;
         }
     });
-    new L.Control.Graph({ position: 'topleft' }).addTo(map);
+    // new L.Control.Graph({ position: 'topleft' }).addTo(map);
 
     // 2. Variables Globales
     var myChart;
