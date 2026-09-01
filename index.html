@@ -314,16 +314,36 @@
     <script src="data/Bueno_10.js"></script>
     <script src="data/Apagada_11.js"></script>
     <script src="data/Alumbradopostes_12.js"></script>
-    <script src="data/riesgos/Inundacion_Muybaja.js"></script>
-    <script src="data/riesgos/Inundacion_Baja.js"></script>
-    <script src="data/riesgos/Inundacion_Media.js"></script>
-    <script src="data/riesgos/Inundacion_Alta.js"></script>
-    <script src="data/riesgos/Inundacion_Muyalta.js"></script>
-    <script src="data/riesgos/Ciclones_Muybaja.js"></script>
-    <script src="data/riesgos/Ciclones_Baja.js"></script>
-    <script src="data/riesgos/Ciclones_Media.js"></script>
-    <script src="data/riesgos/Ciclones_Alta.js"></script>
-    <script src="data/riesgos/Ciclones_Muyalta.js"></script>
+    <script src="data/riesgos/Inundacion_Muybajo.js"></script>
+    <script src="data/riesgos/Inundacion_Bajo.js"></script>
+    <script src="data/riesgos/Inundacion_Medio.js"></script>
+    <script src="data/riesgos/Inundacion_Alto.js"></script>
+    <script src="data/riesgos/Inundacion_Muyalto.js"></script>
+    <script src="data/riesgos/Ciclones_Muybajo.js"></script>
+    <script src="data/riesgos/Ciclones_Bajo.js"></script>
+    <script src="data/riesgos/Ciclones_Medio.js"></script>
+    <script src="data/riesgos/Ciclones_Alto.js"></script>
+    <script src="data/riesgos/Ciclones_Muyalto.js"></script>
+    <script src="data/riesgos/Sequia_Muybajo.js"></script>
+    <script src="data/riesgos/Sequia_Bajo.js"></script>
+    <script src="data/riesgos/Sequia_Medio.js"></script>
+    <script src="data/riesgos/Sequia_Alto.js"></script>
+    <script src="data/riesgos/Sequia_Muyalto.js"></script>
+    <script src="data/riesgos/Quimicos_Muybajo.js"></script>
+    <script src="data/riesgos/Quimicos_Bajo.js"></script>
+    <script src="data/riesgos/Quimicos_Medio.js"></script>
+    <script src="data/riesgos/Quimicos_Alto.js"></script>
+    <script src="data/riesgos/Quimicos_Muyalto.js"></script>
+    <script src="data/riesgos/Incendios_Muybajo.js"></script>
+    <script src="data/riesgos/Incendios_Bajo.js"></script>
+    <script src="data/riesgos/Incendios_Medio.js"></script>
+    <script src="data/riesgos/Incendios_Alto.js"></script>
+    <script src="data/riesgos/Incendios_Muyalto.js"></script>
+    <script src="data/riesgos/Accidentes_Muybajo.js"></script>
+    <script src="data/riesgos/Accidentes_Bajo.js"></script>
+    <script src="data/riesgos/Accidentes_Medio.js"></script>
+    <script src="data/riesgos/Accidentes_Alto.js"></script>
+    <script src="data/riesgos/Accidentes_Muyalto.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/digidem/leaflet-side-by-side@2.0.0/leaflet-side-by-side.min.js"></script>
     
     <script>
@@ -965,38 +985,86 @@
     function onEachInundacion(feature, layer) {
         if (feature.properties) {
             var col = feature.properties['COLONIA'] || '';
-            var vul = feature.properties['VULNERABIL'] || '';
+            var vul = feature.properties['PELIGRO'] || feature.properties['RIESGO'] || feature.properties['VULNERABIL'] || '';
             var popupContent = '<div style="font-size: 14px; text-transform: uppercase; padding: 10px;">' +
                 '<div style="margin-bottom: 5px;"><strong style="color:#444;">COLONIA:</strong> ' + String(col) + '</div>' +
-                '<div><strong style="color:#444;">VULNERABILIDAD:</strong> ' + String(vul) + '</div>' +
+                '<div><strong style="color:#444;">GRADO DE RIESGO:</strong> ' + String(vul) + '</div>' +
                 '</div>';
             layer.bindPopup(popupContent, { maxHeight: 400 });
         }
     }
 
-    var layer_Inundacion_MuyBaja = (typeof json_Inundacion_Muybaja !== 'undefined') ? new L.geoJson(json_Inundacion_Muybaja, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Inundacion_Baja = (typeof json_Inundacion_Baja !== 'undefined') ? new L.geoJson(json_Inundacion_Baja, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Inundacion_Media = (typeof json_Inundacion_Media !== 'undefined') ? new L.geoJson(json_Inundacion_Media, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Inundacion_Alta = (typeof json_Inundacion_Alta !== 'undefined') ? new L.geoJson(json_Inundacion_Alta, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Inundacion_MuyAlta = (typeof json_Inundacion_Muyalta !== 'undefined') ? new L.geoJson(json_Inundacion_Muyalta, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_MuyBajo = (typeof json_Inundacion_Muybajo !== 'undefined') ? new L.geoJson(json_Inundacion_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Bajo = (typeof json_Inundacion_Bajo !== 'undefined') ? new L.geoJson(json_Inundacion_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Medio = (typeof json_Inundacion_Medio !== 'undefined') ? new L.geoJson(json_Inundacion_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_Alto = (typeof json_Inundacion_Alto !== 'undefined') ? new L.geoJson(json_Inundacion_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Inundacion_MuyAlto = (typeof json_Inundacion_Muyalto !== 'undefined') ? new L.geoJson(json_Inundacion_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
 
-    if(typeof json_Inundacion_Muybaja !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyBaja);
-    if(typeof json_Inundacion_Baja !== 'undefined') bounds_group.addLayer(layer_Inundacion_Baja);
-    if(typeof json_Inundacion_Media !== 'undefined') bounds_group.addLayer(layer_Inundacion_Media);
-    if(typeof json_Inundacion_Alta !== 'undefined') bounds_group.addLayer(layer_Inundacion_Alta);
-    if(typeof json_Inundacion_Muyalta !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyAlta);
+    if(typeof json_Inundacion_Muybajo !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyBajo);
+    if(typeof json_Inundacion_Bajo !== 'undefined') bounds_group.addLayer(layer_Inundacion_Bajo);
+    if(typeof json_Inundacion_Medio !== 'undefined') bounds_group.addLayer(layer_Inundacion_Medio);
+    if(typeof json_Inundacion_Alto !== 'undefined') bounds_group.addLayer(layer_Inundacion_Alto);
+    if(typeof json_Inundacion_Muyalto !== 'undefined') bounds_group.addLayer(layer_Inundacion_MuyAlto);
 
-    var layer_Ciclones_MuyBaja = (typeof json_Ciclones_Muybaja !== 'undefined') ? new L.geoJson(json_Ciclones_Muybaja, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Ciclones_Baja = (typeof json_Ciclones_Baja !== 'undefined') ? new L.geoJson(json_Ciclones_Baja, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Ciclones_Media = (typeof json_Ciclones_Media !== 'undefined') ? new L.geoJson(json_Ciclones_Media, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Ciclones_Alta = (typeof json_Ciclones_Alta !== 'undefined') ? new L.geoJson(json_Ciclones_Alta, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
-    var layer_Ciclones_MuyAlta = (typeof json_Ciclones_Muyalta !== 'undefined') ? new L.geoJson(json_Ciclones_Muyalta, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_MuyBajo = (typeof json_Ciclones_Muybajo !== 'undefined') ? new L.geoJson(json_Ciclones_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Bajo = (typeof json_Ciclones_Bajo !== 'undefined') ? new L.geoJson(json_Ciclones_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Medio = (typeof json_Ciclones_Medio !== 'undefined') ? new L.geoJson(json_Ciclones_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_Alto = (typeof json_Ciclones_Alto !== 'undefined') ? new L.geoJson(json_Ciclones_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Ciclones_MuyAlto = (typeof json_Ciclones_Muyalto !== 'undefined') ? new L.geoJson(json_Ciclones_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
 
-    if(typeof json_Ciclones_Muybaja !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyBaja);
-    if(typeof json_Ciclones_Baja !== 'undefined') bounds_group.addLayer(layer_Ciclones_Baja);
-    if(typeof json_Ciclones_Media !== 'undefined') bounds_group.addLayer(layer_Ciclones_Media);
-    if(typeof json_Ciclones_Alta !== 'undefined') bounds_group.addLayer(layer_Ciclones_Alta);
-    if(typeof json_Ciclones_Muyalta !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyAlta);
+    if(typeof json_Ciclones_Muybajo !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyBajo);
+    if(typeof json_Ciclones_Bajo !== 'undefined') bounds_group.addLayer(layer_Ciclones_Bajo);
+    if(typeof json_Ciclones_Medio !== 'undefined') bounds_group.addLayer(layer_Ciclones_Medio);
+    if(typeof json_Ciclones_Alto !== 'undefined') bounds_group.addLayer(layer_Ciclones_Alto);
+    if(typeof json_Ciclones_Muyalto !== 'undefined') bounds_group.addLayer(layer_Ciclones_MuyAlto);
+
+    var layer_Sequia_MuyBajo = (typeof json_Sequia_Muybajo !== 'undefined') ? new L.geoJson(json_Sequia_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Sequia_Bajo = (typeof json_Sequia_Bajo !== 'undefined') ? new L.geoJson(json_Sequia_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Sequia_Medio = (typeof json_Sequia_Medio !== 'undefined') ? new L.geoJson(json_Sequia_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Sequia_Alto = (typeof json_Sequia_Alto !== 'undefined') ? new L.geoJson(json_Sequia_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Sequia_MuyAlto = (typeof json_Sequia_Muyalto !== 'undefined') ? new L.geoJson(json_Sequia_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Sequia_Muybajo !== 'undefined') bounds_group.addLayer(layer_Sequia_MuyBajo);
+    if(typeof json_Sequia_Bajo !== 'undefined') bounds_group.addLayer(layer_Sequia_Bajo);
+    if(typeof json_Sequia_Medio !== 'undefined') bounds_group.addLayer(layer_Sequia_Medio);
+    if(typeof json_Sequia_Alto !== 'undefined') bounds_group.addLayer(layer_Sequia_Alto);
+    if(typeof json_Sequia_Muyalto !== 'undefined') bounds_group.addLayer(layer_Sequia_MuyAlto);
+
+    var layer_Quimicos_MuyBajo = (typeof json_Quimicos_Muybajo !== 'undefined') ? new L.geoJson(json_Quimicos_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Quimicos_Bajo = (typeof json_Quimicos_Bajo !== 'undefined') ? new L.geoJson(json_Quimicos_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Quimicos_Medio = (typeof json_Quimicos_Medio !== 'undefined') ? new L.geoJson(json_Quimicos_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Quimicos_Alto = (typeof json_Quimicos_Alto !== 'undefined') ? new L.geoJson(json_Quimicos_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Quimicos_MuyAlto = (typeof json_Quimicos_Muyalto !== 'undefined') ? new L.geoJson(json_Quimicos_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Quimicos_Muybajo !== 'undefined') bounds_group.addLayer(layer_Quimicos_MuyBajo);
+    if(typeof json_Quimicos_Bajo !== 'undefined') bounds_group.addLayer(layer_Quimicos_Bajo);
+    if(typeof json_Quimicos_Medio !== 'undefined') bounds_group.addLayer(layer_Quimicos_Medio);
+    if(typeof json_Quimicos_Alto !== 'undefined') bounds_group.addLayer(layer_Quimicos_Alto);
+    if(typeof json_Quimicos_Muyalto !== 'undefined') bounds_group.addLayer(layer_Quimicos_MuyAlto);
+
+    var layer_Incendios_MuyBajo = (typeof json_Incendios_Muybajo !== 'undefined') ? new L.geoJson(json_Incendios_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Incendios_Bajo = (typeof json_Incendios_Bajo !== 'undefined') ? new L.geoJson(json_Incendios_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Incendios_Medio = (typeof json_Incendios_Medio !== 'undefined') ? new L.geoJson(json_Incendios_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Incendios_Alto = (typeof json_Incendios_Alto !== 'undefined') ? new L.geoJson(json_Incendios_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Incendios_MuyAlto = (typeof json_Incendios_Muyalto !== 'undefined') ? new L.geoJson(json_Incendios_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Incendios_Muybajo !== 'undefined') bounds_group.addLayer(layer_Incendios_MuyBajo);
+    if(typeof json_Incendios_Bajo !== 'undefined') bounds_group.addLayer(layer_Incendios_Bajo);
+    if(typeof json_Incendios_Medio !== 'undefined') bounds_group.addLayer(layer_Incendios_Medio);
+    if(typeof json_Incendios_Alto !== 'undefined') bounds_group.addLayer(layer_Incendios_Alto);
+    if(typeof json_Incendios_Muyalto !== 'undefined') bounds_group.addLayer(layer_Incendios_MuyAlto);
+
+    var layer_Accidentes_MuyBajo = (typeof json_Accidentes_Muybajo !== 'undefined') ? new L.geoJson(json_Accidentes_Muybajo, { style: styleInundacion('#006d2c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Accidentes_Bajo = (typeof json_Accidentes_Bajo !== 'undefined') ? new L.geoJson(json_Accidentes_Bajo, { style: styleInundacion('#74c476'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Accidentes_Medio = (typeof json_Accidentes_Medio !== 'undefined') ? new L.geoJson(json_Accidentes_Medio, { style: styleInundacion('#fed976'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Accidentes_Alto = (typeof json_Accidentes_Alto !== 'undefined') ? new L.geoJson(json_Accidentes_Alto, { style: styleInundacion('#fd8d3c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+    var layer_Accidentes_MuyAlto = (typeof json_Accidentes_Muyalto !== 'undefined') ? new L.geoJson(json_Accidentes_Muyalto, { style: styleInundacion('#e31a1c'), onEachFeature: onEachInundacion }) : L.layerGroup();
+
+    if(typeof json_Accidentes_Muybajo !== 'undefined') bounds_group.addLayer(layer_Accidentes_MuyBajo);
+    if(typeof json_Accidentes_Bajo !== 'undefined') bounds_group.addLayer(layer_Accidentes_Bajo);
+    if(typeof json_Accidentes_Medio !== 'undefined') bounds_group.addLayer(layer_Accidentes_Medio);
+    if(typeof json_Accidentes_Alto !== 'undefined') bounds_group.addLayer(layer_Accidentes_Alto);
+    if(typeof json_Accidentes_Muyalto !== 'undefined') bounds_group.addLayer(layer_Accidentes_MuyAlto);
 
     var overlaysTree = [
         // ATLAS DE RIESGOS
@@ -1010,11 +1078,11 @@
                     selectAllCheckbox: true,
                     collapsed: false,
                     children: [
-                        {label: '🟩 Muy baja', layer: layer_Inundacion_MuyBaja},
-                        {label: '🟩 Baja', layer: layer_Inundacion_Baja},
-                        {label: '🟨 Media', layer: layer_Inundacion_Media},
-                        {label: '🟧 Alta', layer: layer_Inundacion_Alta},
-                        {label: '🟥 Muy alta', layer: layer_Inundacion_MuyAlta}
+                        {label: '🟩 Muy bajo', layer: layer_Inundacion_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Inundacion_Bajo},
+                        {label: '🟨 Medio', layer: layer_Inundacion_Medio},
+                        {label: '🟧 Alto', layer: layer_Inundacion_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Inundacion_MuyAlto}
                     ]
                 },
                 {
@@ -1022,11 +1090,59 @@
                     selectAllCheckbox: true,
                     collapsed: true,
                     children: [
-                        {label: '🟩 Muy baja', layer: layer_Ciclones_MuyBaja},
-                        {label: '🟩 Baja', layer: layer_Ciclones_Baja},
-                        {label: '🟨 Media', layer: layer_Ciclones_Media},
-                        {label: '🟧 Alta', layer: layer_Ciclones_Alta},
-                        {label: '🟥 Muy alta', layer: layer_Ciclones_MuyAlta}
+                        {label: '🟩 Muy bajo', layer: layer_Ciclones_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Ciclones_Bajo},
+                        {label: '🟨 Medio', layer: layer_Ciclones_Medio},
+                        {label: '🟧 Alto', layer: layer_Ciclones_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Ciclones_MuyAlto}
+                    ]
+                },
+                {
+                    label: '☀️ Sequías',
+                    selectAllCheckbox: true,
+                    collapsed: true,
+                    children: [
+                        {label: '🟩 Muy bajo', layer: layer_Sequia_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Sequia_Bajo},
+                        {label: '🟨 Medio', layer: layer_Sequia_Medio},
+                        {label: '🟧 Alto', layer: layer_Sequia_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Sequia_MuyAlto}
+                    ]
+                },
+                {
+                    label: '☣️ Sustancias peligrosas',
+                    selectAllCheckbox: true,
+                    collapsed: true,
+                    children: [
+                        {label: '🟩 Muy bajo', layer: layer_Quimicos_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Quimicos_Bajo},
+                        {label: '🟨 Medio', layer: layer_Quimicos_Medio},
+                        {label: '🟧 Alto', layer: layer_Quimicos_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Quimicos_MuyAlto}
+                    ]
+                },
+                {
+                    label: '🔥 Incendios forestales',
+                    selectAllCheckbox: true,
+                    collapsed: true,
+                    children: [
+                        {label: '🟩 Muy bajo', layer: layer_Incendios_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Incendios_Bajo},
+                        {label: '🟨 Medio', layer: layer_Incendios_Medio},
+                        {label: '🟧 Alto', layer: layer_Incendios_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Incendios_MuyAlto}
+                    ]
+                },
+                {
+                    label: '🚗 Accidentes de transporte',
+                    selectAllCheckbox: true,
+                    collapsed: true,
+                    children: [
+                        {label: '🟩 Muy bajo', layer: layer_Accidentes_MuyBajo},
+                        {label: '🟩 Bajo', layer: layer_Accidentes_Bajo},
+                        {label: '🟨 Medio', layer: layer_Accidentes_Medio},
+                        {label: '🟧 Alto', layer: layer_Accidentes_Alto},
+                        {label: '🟥 Muy alto', layer: layer_Accidentes_MuyAlto}
                     ]
                 }
             ]
@@ -1191,17 +1307,41 @@
             return col === '' ? 'SIN NOMBRE' : col;
         }
 
-        if (typeof layer_Inundacion_MuyBaja !== 'undefined') addDataToSearch(layer_Inundacion_MuyBaja, getColoniaText, 'Inundaciones');
-        if (typeof layer_Inundacion_Baja !== 'undefined') addDataToSearch(layer_Inundacion_Baja, getColoniaText, 'Inundaciones');
-        if (typeof layer_Inundacion_Media !== 'undefined') addDataToSearch(layer_Inundacion_Media, getColoniaText, 'Inundaciones');
-        if (typeof layer_Inundacion_Alta !== 'undefined') addDataToSearch(layer_Inundacion_Alta, getColoniaText, 'Inundaciones');
-        if (typeof layer_Inundacion_MuyAlta !== 'undefined') addDataToSearch(layer_Inundacion_MuyAlta, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_MuyBajo !== 'undefined') addDataToSearch(layer_Inundacion_MuyBajo, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Bajo !== 'undefined') addDataToSearch(layer_Inundacion_Bajo, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Medio !== 'undefined') addDataToSearch(layer_Inundacion_Medio, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_Alto !== 'undefined') addDataToSearch(layer_Inundacion_Alto, getColoniaText, 'Inundaciones');
+        if (typeof layer_Inundacion_MuyAlto !== 'undefined') addDataToSearch(layer_Inundacion_MuyAlto, getColoniaText, 'Inundaciones');
 
-        if (typeof layer_Ciclones_MuyBaja !== 'undefined') addDataToSearch(layer_Ciclones_MuyBaja, getColoniaText, 'Tormenta');
-        if (typeof layer_Ciclones_Baja !== 'undefined') addDataToSearch(layer_Ciclones_Baja, getColoniaText, 'Tormenta');
-        if (typeof layer_Ciclones_Media !== 'undefined') addDataToSearch(layer_Ciclones_Media, getColoniaText, 'Tormenta');
-        if (typeof layer_Ciclones_Alta !== 'undefined') addDataToSearch(layer_Ciclones_Alta, getColoniaText, 'Tormenta');
-        if (typeof layer_Ciclones_MuyAlta !== 'undefined') addDataToSearch(layer_Ciclones_MuyAlta, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_MuyBajo !== 'undefined') addDataToSearch(layer_Ciclones_MuyBajo, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Bajo !== 'undefined') addDataToSearch(layer_Ciclones_Bajo, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Medio !== 'undefined') addDataToSearch(layer_Ciclones_Medio, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_Alto !== 'undefined') addDataToSearch(layer_Ciclones_Alto, getColoniaText, 'Tormenta');
+        if (typeof layer_Ciclones_MuyAlto !== 'undefined') addDataToSearch(layer_Ciclones_MuyAlto, getColoniaText, 'Tormenta');
+
+        if (typeof layer_Sequia_MuyBajo !== 'undefined') addDataToSearch(layer_Sequia_MuyBajo, getColoniaText, 'Sequia');
+        if (typeof layer_Sequia_Bajo !== 'undefined') addDataToSearch(layer_Sequia_Bajo, getColoniaText, 'Sequia');
+        if (typeof layer_Sequia_Medio !== 'undefined') addDataToSearch(layer_Sequia_Medio, getColoniaText, 'Sequia');
+        if (typeof layer_Sequia_Alto !== 'undefined') addDataToSearch(layer_Sequia_Alto, getColoniaText, 'Sequia');
+        if (typeof layer_Sequia_MuyAlto !== 'undefined') addDataToSearch(layer_Sequia_MuyAlto, getColoniaText, 'Sequia');
+
+        if (typeof layer_Quimicos_MuyBajo !== 'undefined') addDataToSearch(layer_Quimicos_MuyBajo, getColoniaText, 'Quimicos');
+        if (typeof layer_Quimicos_Bajo !== 'undefined') addDataToSearch(layer_Quimicos_Bajo, getColoniaText, 'Quimicos');
+        if (typeof layer_Quimicos_Medio !== 'undefined') addDataToSearch(layer_Quimicos_Medio, getColoniaText, 'Quimicos');
+        if (typeof layer_Quimicos_Alto !== 'undefined') addDataToSearch(layer_Quimicos_Alto, getColoniaText, 'Quimicos');
+        if (typeof layer_Quimicos_MuyAlto !== 'undefined') addDataToSearch(layer_Quimicos_MuyAlto, getColoniaText, 'Quimicos');
+
+        if (typeof layer_Incendios_MuyBajo !== 'undefined') addDataToSearch(layer_Incendios_MuyBajo, getColoniaText, 'Incendios');
+        if (typeof layer_Incendios_Bajo !== 'undefined') addDataToSearch(layer_Incendios_Bajo, getColoniaText, 'Incendios');
+        if (typeof layer_Incendios_Medio !== 'undefined') addDataToSearch(layer_Incendios_Medio, getColoniaText, 'Incendios');
+        if (typeof layer_Incendios_Alto !== 'undefined') addDataToSearch(layer_Incendios_Alto, getColoniaText, 'Incendios');
+        if (typeof layer_Incendios_MuyAlto !== 'undefined') addDataToSearch(layer_Incendios_MuyAlto, getColoniaText, 'Incendios');
+
+        if (typeof layer_Accidentes_MuyBajo !== 'undefined') addDataToSearch(layer_Accidentes_MuyBajo, getColoniaText, 'Accidentes');
+        if (typeof layer_Accidentes_Bajo !== 'undefined') addDataToSearch(layer_Accidentes_Bajo, getColoniaText, 'Accidentes');
+        if (typeof layer_Accidentes_Medio !== 'undefined') addDataToSearch(layer_Accidentes_Medio, getColoniaText, 'Accidentes');
+        if (typeof layer_Accidentes_Alto !== 'undefined') addDataToSearch(layer_Accidentes_Alto, getColoniaText, 'Accidentes');
+        if (typeof layer_Accidentes_MuyAlto !== 'undefined') addDataToSearch(layer_Accidentes_MuyAlto, getColoniaText, 'Accidentes');
         // 4. Instanciar el buscador
         var searchControl = new L.Control.Search({
             layer: searchLayer,
@@ -1279,6 +1419,10 @@
                         <option value="">🔎 Buscar en todo</option>
                         <option value="Inundaciones">🌊 Inundaciones fluviales</option>
                         <option value="Tormenta">🌀 Ciclones tropicales</option>
+                        <option value="Sequia">☀️ Sequías</option>
+                        <option value="Quimicos">☣️ Sustancias peligrosas</option>
+                        <option value="Incendios">🔥 Incendios forestales</option>
+                        <option value="Accidentes">🚗 Accidentes de transporte</option>
                     `;
                     
                     selectHTML.style.cssText = 'border: 2px solid #C3935D; padding: 2px; border-radius: 4px; margin-left: 6px; background: white; color: #7E1928; font-weight: bold; cursor: pointer; outline: none; font-family: Montserrat, sans-serif; font-size: 11px; height: 28px; vertical-align: top; display: inline-block;';
