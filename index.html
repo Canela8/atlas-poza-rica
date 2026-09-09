@@ -76,9 +76,22 @@
         }
 
         .client-area { 
-            font-size: 18px; color: rgba(255,255,255,0.9); 
-            border-left: 1px solid #C3935D; padding-left: 20px; 
-            font-weight: 600; height: 40px; display: flex; align-items: center;
+            font-size: 18px;
+            color: rgba(255,255,255,0.9); 
+            border-left: 1px solid #C3935D;
+            padding-left: 20px; 
+            font-weight: 600;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .client-area .drobot-brand-logo {
+            width: 150px;
+            height: auto;
+            display: block;
+            object-fit: contain;
         }
         /* --- 3. CONTROLES Y MENÚ DE CAPAS --- */
 
@@ -267,7 +280,7 @@
             .leaflet-control-scale { display: none; }
         }
     </style>
-    <title>Catastro Municipal</title>
+    <title>Atlas de Riesgos</title>
 </head>
 
 <body>
@@ -283,6 +296,9 @@
         </div>
         <div class="client-area">
             <span>ATLAS DE RIESGOS</span>
+            <img src="images/drobot-logo.png"
+                alt="Drobot"
+                class="drobot-brand-logo">
         </div>
     </div> 
     
